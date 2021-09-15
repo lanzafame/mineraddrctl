@@ -10,6 +10,9 @@ the miner running when performing the following operations:
 
 ## Usage
 
+The environment variables `LOTUS_API` and `LOTUS_TOKEN` need to set to the appropriate values
+for your setup.
+
 ```
 $ mineraddrctl -h
 NAME:
