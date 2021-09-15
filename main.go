@@ -172,6 +172,10 @@ var actorProposeChangeWorker = &cli.Command{
 			Usage: "Actually send transaction performing the action",
 			Value: false,
 		},
+		&cli.BoolFlag{
+			Name:  "q",
+			Usage: "minimize output",
+		},
 	},
 	Action: func(cctx *cli.Context) error {
 		if !cctx.Args().Present() {
@@ -263,8 +267,11 @@ var actorProposeChangeWorker = &cli.Command{
 			return fmt.Errorf("proposed worker address change not reflected on chain: expected '%s', found '%s'", na, mi.NewWorker)
 		}
 
-		fmt.Fprintf(cctx.App.Writer, "Worker key change to %s successfully proposed.\n", na)
-		fmt.Fprintf(cctx.App.Writer, "Call 'confirm-change-worker' at or after height %d to complete.\n", mi.WorkerChangeEpoch)
+		if !cctx.Bool("q") {
+			fmt.Fprint(cctx.App.Writer, mi.WorkerChangeEpoch)
+		} else {
+			fmt.Fprintf(cctx.App.Writer, "Call 'confirm-change-worker' at or after height %d to complete.\n", mi.WorkerChangeEpoch)
+		}
 
 		return nil
 	},
