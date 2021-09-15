@@ -34,3 +34,12 @@ To start an owner transfer, run the following command:
 ```
 $ mineraddrctl owner transfer --really-do-it --miner f012345 <new_owner_addr> <current_owner_addr>
 ```
+
+## Credit
+
+Most of the code here is taken from [Lotus](https://github.com/filecoin-project/lotus) and has just been
+rearranged for better UX.
+
+## License
+
+Dual-licensed under [MIT](https://github.com/lanzafame/mineraddrctl/blob/master/LICENSE-MIT) + [Apache 2.0](https://github.com/lanzafame/mineraddrctl/blob/master/LICENSE-APACHE)
