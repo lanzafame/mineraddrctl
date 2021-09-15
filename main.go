@@ -30,6 +30,7 @@ func main() {
 	app := &cli.App{
 		Name:     "mineraddrctl",
 		Commands: local,
+		Usage:    "manage miner addresses",
 	}
 	app.Setup()
 
@@ -48,8 +49,11 @@ var ownerCmd = &cli.Command{
 
 var transferCmd = &cli.Command{
 	Name:  "transfer",
-	Usage: "newAddr senderAddr minerID",
+	Usage: "newAddr senderAddr",
 	Flags: []cli.Flag{
+		&cli.StringFlag{
+			Name: "miner",
+		},
 		&cli.BoolFlag{
 			Name:  "wait",
 			Usage: "wait for the transaction to be confirmed",
@@ -90,7 +94,7 @@ var transferCmd = &cli.Command{
 			return err
 		}
 
-		maddr, err := address.NewFromString(cctx.Args().Get(2))
+		maddr, err := address.NewFromString(cctx.String("miner"))
 		if err != nil {
 			return err
 		}
