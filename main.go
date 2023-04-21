@@ -9,10 +9,10 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/big"
+	"github.com/filecoin-project/go-state-types/builtin"
 	lotusapi "github.com/filecoin-project/lotus/api"
 	"github.com/filecoin-project/lotus/build"
 	"github.com/filecoin-project/lotus/chain/actors"
-	"github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	logging "github.com/ipfs/go-log/v2"
 	"github.com/urfave/cli/v2"
@@ -121,7 +121,7 @@ var transferCmd = &cli.Command{
 		smsg, err := api.MpoolPushMessage(ctx, &types.Message{
 			From:   fromAddrId,
 			To:     maddr,
-			Method: miner.Methods.ChangeOwnerAddress,
+			Method: builtin.MethodsMiner.ChangeOwnerAddress,
 			Value:  big.Zero(),
 			Params: sp,
 		}, nil)
@@ -237,7 +237,7 @@ var actorProposeChangeWorker = &cli.Command{
 		smsg, err := api.MpoolPushMessage(ctx, &types.Message{
 			From:   mi.Owner,
 			To:     maddr,
-			Method: miner.Methods.ChangeWorkerAddress,
+			Method: builtin.MethodsMiner.ChangeWorkerAddress,
 			Value:  big.Zero(),
 			Params: sp,
 		}, nil)
@@ -344,7 +344,7 @@ var actorConfirmChangeWorker = &cli.Command{
 		smsg, err := api.MpoolPushMessage(ctx, &types.Message{
 			From:   mi.Owner,
 			To:     maddr,
-			Method: miner.Methods.ConfirmUpdateWorkerKey,
+			Method: builtin.MethodsMiner.ConfirmChangeWorkerAddress,
 			Value:  big.Zero(),
 		}, nil)
 		if err != nil {
@@ -479,7 +479,7 @@ var actorControlSet = &cli.Command{
 		smsg, err := api.MpoolPushMessage(ctx, &types.Message{
 			From:   mi.Owner,
 			To:     maddr,
-			Method: miner.Methods.ChangeWorkerAddress,
+			Method: builtin.MethodsMiner.ChangeWorkerAddress,
 
 			Value:  big.Zero(),
 			Params: sp,
